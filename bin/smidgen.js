@@ -10,18 +10,23 @@ const handleError = require('../lib/handle-error.js')
 process.on('uncaughtException', handleError)
 
 const parsed = nopt({
-  'json': [ Boolean ]
-}, {'v': 'v'}, process.argv, 2)
+  'json': [ Boolean ],
+  'depth': [ Number ],
+  'mwm': [ Number ],
+  'port': [ Number ]
+}, {}, process.argv, 2)
 
 const cmd = parsed.argv.remain.shift()
 
 smidgen.load(parsed, (err) => {
-  if (err) throw err
+  if (err) return handleError(err)
 
   if (!cmd || !smidgen.cli[cmd]) {
     return smidgen.cli.help(() => {})
   }
 
   smidgen
-    .cli[cmd](smidgen.config, () => {})
+    .cli[cmd](parsed.argv.remain, (err) => {
+      if (err) handleError(err)
+    })
 })

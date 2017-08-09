@@ -10,8 +10,11 @@
     "unit": "mocha"
   },
   "dependencies": {
+    "iota.lib.js": "^0.3.8",
+    "mkdirp": "^0.5.1",
     "nopt": "^4.0.1",
-    "npmlog": "^4.1.2"
+    "npmlog": "^4.1.2",
+    "read": "^1.0.7"
   },
   "devDependencies": {
     "mocha": "^3.4.2",
