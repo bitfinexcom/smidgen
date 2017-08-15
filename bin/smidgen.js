@@ -13,8 +13,8 @@ const parsed = nopt({
   'json': [ Boolean ],
   'depth': [ Number ],
   'mwm': [ Number ],
-  'port': [ Number ],
-  'watch': [ Boolean ]
+  'watch': [ Boolean ],
+  'force': [ Boolean ],
 }, {}, process.argv, 2)
 
 const cmd = parsed.argv.remain.shift()

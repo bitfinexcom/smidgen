@@ -61,9 +61,11 @@ Use `depth` to configure tip selection and `mwm` to change the minimum
 weight magnitude.
 
 
-#### transfer <amount> <address> [--json | --depth | --mwm]
+#### transfer <amount> <address> [--json | --depth | --mwm | --force]
 
 Transfers a given amount of *i* to an address.
+With `--force` enabled smidgen will not check if the target address was used
+before, which can lead to loss of IOTA for the owner of the address.
 
 ## API
 
@@ -134,3 +136,4 @@ smidgen.load(conf, (err, smidgen) => {
     - `json` &lt;Boolean&gt; return json
     - `depth` &lt;Number&gt; set depth for tip selection
     - `mwm` &lt;Number&gt; set minimum weight magnitude
+    - `force` &lt;Boolean&gt; continue even with already used addresses
