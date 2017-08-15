@@ -5,10 +5,12 @@
     - generate-seed
     - get-balance
     - generate-address
+    - transfer
   - [API](#api)
     - generate-seed
     - get-balance
     - generate-address
+    - transfer
 
 ## Installation
 
@@ -57,6 +59,11 @@ Generates a new address and attaches to tangle.
 If `json` is true, it prints JSON.
 Use `depth` to configure tip selection and `mwm` to change the minimum
 weight magnitude.
+
+
+#### transfer <amount> <address> [--json | --depth | --mwm]
+
+Transfers a given amount of *i* to an address.
 
 ## API
 
@@ -120,3 +127,10 @@ smidgen.load(conf, (err, smidgen) => {
   })
 })
 ```
+
+#### smidgen['transfer'](iotaLib, conf, address, amount, seed, cb)
+
+  - `conf` &lt;Object&gt;
+    - `json` &lt;Boolean&gt; return json
+    - `depth` &lt;Number&gt; set depth for tip selection
+    - `mwm` &lt;Number&gt; set minimum weight magnitude
