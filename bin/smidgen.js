@@ -15,6 +15,7 @@ const parsed = nopt({
   'mwm': [ Number ],
   'watch': [ Boolean ],
   'force': [ Boolean ],
+  'provider': [ String ]
 }, {}, process.argv, 2)
 
 const cmd = parsed.argv.remain.shift()
