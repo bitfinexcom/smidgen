@@ -22,6 +22,9 @@ npm install -g smidgen
 
 The CLI supports different commands for managing your wallet.
 
+The default provider is `http://iota.bitfinex.com:80`. You can
+change it by passing `--provider http://example.com` as argument.
+
 #### generate-seed [--json]
 
 Returns a seed for the IOTA wallet. If `json` is true, it prints JSON.
@@ -36,7 +39,7 @@ $ smidgen generate-seed --json
 { seed: 'UZQRLQNQAAXNSJAZTTMWGCAMQCCZBKTQMC9GKRBMVGXWCBIZAOA9LEPBKZKFSPMUEAKGRISEDNOGPZNHG' }
 ```
 
-#### get-balance [--json | --watch]
+#### get-balance [--json | --watch | --provider]
 
 Gets the balance of a wallet. If `json` is true, it prints JSON.
 The `--watch` option lets you watch a wallet for changes.
@@ -52,7 +55,7 @@ $ smidgen get-balance --json
 {"balance":471735365}
 ```
 
-#### generate-address [--json | --depth | --mwm]
+#### generate-address [--json | --depth | --mwm | --provider]
 
 Generates a new address and attaches to tangle.
 
@@ -61,7 +64,7 @@ Use `depth` to configure tip selection and `mwm` to change the minimum
 weight magnitude.
 
 
-#### transfer <amount> <address> [--json | --depth | --mwm | --force]
+#### transfer <amount> <address> [--json | --depth | --mwm | --force | --provider]
 
 Transfers a given amount of *i* to an address.
 With `--force` enabled smidgen will not check if the target address was used
