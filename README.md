@@ -7,12 +7,14 @@
     - generate-address
     - transfer
     - multisig create
+    - multisig add
   - [API](#api)
     - 'generate-seed'
     - 'get-balance'
     - 'generate-address'
     - transfer
     - multisig.create
+    - multisig.add
 
 ## Installation
 
@@ -72,13 +74,17 @@ Transfers a given amount of *i* to an address.
 With `--force` enabled smidgen will not check if the target address was used
 before, which can lead to loss of IOTA for the owner of the address.
 
-#### multisig create <id> [<file>] ][--force]
+#### multisig create <id> <file> [--force]
 
 Starts the creation of a multisignature wallet. `id` is the identifier for
-the first party that signs the wallet. If no filename is provided, the setup-file
-is printed to `stdout`.
+the first party that signs the wallet.
 
 `--force` can be used to overwrite an existing setup-file.
+
+#### multisig add <id> <file>
+
+Adds another party to the setup file used for multisignature wallet generation.
+
 
 ## API
 
@@ -157,3 +163,5 @@ smidgen.load(conf, (err, smidgen) => {
     - `force` &lt;Boolean&gt; overwrite existing setup file
 
 If `filename` is `undefined` the `create` command will not write to a file.
+
+#### smidgen['multisig'].add(iotaLib, conf, seed, id, filename, cb)
