@@ -8,6 +8,7 @@
     - transfer
     - multisig create
     - multisig add
+    - multisig finalize
   - [API](#api)
     - 'generate-seed'
     - 'get-balance'
@@ -15,6 +16,7 @@
     - transfer
     - multisig.create
     - multisig.add
+    - multisig.finalize
 
 ## Installation
 
@@ -85,6 +87,11 @@ the first party that signs the wallet.
 
 Adds another party to the setup file used for multisignature wallet generation.
 
+#### multisig finalize <file>
+
+Creates two addresses for transferring IOTA from the multisig wallet.
+One as the main address, and a second one which is used for remaining balance
+after the transfer.
 
 ## API
 
@@ -165,3 +172,5 @@ smidgen.load(conf, (err, smidgen) => {
 If `filename` is `undefined` the `create` command will not write to a file.
 
 #### smidgen['multisig'].add(iotaLib, conf, seed, id, filename, cb)
+
+#### smidgen['multisig'].finalize(iotaLib, conf, filename, cb)
