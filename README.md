@@ -45,10 +45,13 @@ $ smidgen generate-seed --json
 { seed: 'UZQRLQNQAAXNSJAZTTMWGCAMQCCZBKTQMC9GKRBMVGXWCBIZAOA9LEPBKZKFSPMUEAKGRISEDNOGPZNHG' }
 ```
 
-#### get-balance [--json | --watch | --provider]
+#### get-balance [address] [--json | --watch | --threshold |--provider]
 
 Gets the balance of a wallet. If `json` is true, it prints JSON.
 The `--watch` option lets you watch a wallet for changes.
+
+If an address is provided as argument, it will not require a seeds and
+print the balance of the given address.
 
 **Example:**
 
@@ -59,6 +62,9 @@ Balance: 471735365 (471.735365 Mi)
 
 $ smidgen get-balance --json
 {"balance":471735365}
+
+$ smidgen get-balance YHPMMBIMEGWGNKRIDNODAXABWBSRZGOQTAPOUAFODCOCOXZMVUZDRFYHMOJMMREBYYJQGKKZSEGIAFWHYYOXVPVFNY
+Balance: 55 (0.000055 Mi)
 ```
 
 #### generate-address [--json | --depth | --mwm | --provider]
@@ -118,7 +124,7 @@ smidgen.load(conf, (err, smidgen) => {
 })
 ```
 
-#### smidgen['get-balance'](iotaLib, conf, seed, cb)
+#### smidgen['get-balance'].getBalanceForSeed(iotaLib, conf, seed, cb)
 
   - `conf` &lt;Object&gt;
     - `json` &lt;Boolean&gt; return json
@@ -132,7 +138,28 @@ const conf = { json: false }
 const seed = 'UZQRLQNQAAXNSJAZTTMWGCAMQCCZBKTQMC9GKRBMVGXWCBIZAOA9LEPBKZKFSPMUEAKGRISEDNOGPZNHG'
 
 smidgen.load(conf, (err, smidgen) => {
-  smidgen.commands['get-balance'](smidgen.iota, conf, seed, (err, res) => {
+  smidgen.commands['get-balance'].getBalanceForSeed(smidgen.iota, conf, seed, (err, res) => {
+    console.log(res)
+  })
+})
+```
+
+#### smidgen['get-balance'].getBalanceForAddress(iotaLib, conf, address, cb)
+
+  - `conf` &lt;Object&gt;
+    - `json` &lt;Boolean&gt; return json
+    - `threshold` &lt;Number&gt;
+
+**Example:**
+
+```js
+const smidgen = require('smidgen')
+
+const conf = { json: false, threshold: 49 }
+const address = 'YHPMMBIMEGWGNKRIDNODAXABWBSRZGOQTAPOUAFODCOCOXZMVUZDRFYHMOJMMREBYYJQGKKZSEGIAFWHYYOXVPVFNY'
+
+smidgen.load(conf, (err, smidgen) => {
+  smidgen.commands['get-balance'].getBalanceForAddress(smidgen.iota, conf, address, (err, res) => {
     console.log(res)
   })
 })
