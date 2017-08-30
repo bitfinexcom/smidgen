@@ -6,6 +6,7 @@
     - get-balance
     - generate-address
     - transfer
+    - reattach
     - multisig create
     - multisig add
     - multisig finalize
@@ -81,6 +82,10 @@ weight magnitude.
 Transfers a given amount of *i* to an address.
 With `--force` enabled smidgen will not check if the target address was used
 before, which can lead to loss of IOTA for the owner of the address.
+
+#### reattach <transaction> [--provider]
+
+Replays a specific transaction.
 
 #### multisig create <id> <file> [--force]
 
