@@ -1,6 +1,7 @@
 # smidgen - Tiny IOTA multisignature wallet
 
   - [Installation](#installation)
+  - [Multisignature Wallets](#multisignature-wallets)
   - [Commands](#commands)
     - generate-seed
     - get-balance
@@ -10,14 +11,12 @@
     - multisig create
     - multisig add
     - multisig finalize
+    - multisig transfer
   - [API](#api)
     - 'generate-seed'
     - 'get-balance'
     - 'generate-address'
     - transfer
-    - multisig.create
-    - multisig.add
-    - multisig.finalize
 
 ## Installation
 
@@ -103,6 +102,181 @@ Adds another party to the setup file used for multisignature wallet generation.
 Creates two addresses for transferring IOTA from the multisig wallet.
 One as the main address, and a second one which is used for remaining balance
 after the transfer.
+
+#### multisig transfer <value> <address> <id> <file> [--provider | --balance]
+
+Transfers a given amout to the target address. Takes the id of the signing
+party and the multisignature file, containing the account data.
+
+With `--balance` we can override the current balance. This way smidgen will not query the tangle for the current balance.
+
+## Multisignature Wallets
+
+Multisignature wallets add an extra layer of security. With them, we can create addresses, that need multiple Seeds for a transaction. The seeds can be owned by one or multiple persons.
+
+**Important:** Seeds to create multisignature wallets should just be used for one wallet.
+
+Smidgen uses a file that is shared between Seed-owners. With the file we manage the wallet with its addresses and transfers. This makes it easier to keep track of the current state. Private keys are not part of the file. Please make sure you read and understood the [Offical IOTA Multisig FAQ](https://github.com/iotaledger/wiki/blob/master/multisigs.md).
+
+### Creating a Multisignature Wallet
+
+The command for creating a wallet is:
+
+```
+smidgen multisig create <id> <file>
+```
+
+`id` is the identifier for the current party. The order of the signing parties is important for each transfer. By assigning an identifier to each party it easier to verify the right signing order. `file` is the file we will use to store our transactions and addresses.
+
+Let's say we have two parties, Bob and Alice, who want to manage a wallet.
+
+Bob starts the process and creates the Multisignature Wallet:
+
+```
+smidgen multisig create bob multisig.txt
+```
+
+Smidgen asks for the Seed Bob wants to use and creates the file with the digest. Tip: `smidgen generate-seed` creates a secure Seed.
+
+```
+Enter your seed:
+info Successfully wrote to multisig.txt
+info Used key index 0 (main) and 1 (remainder)
+info Finish address creation with:
+info `smidgen multisig add` and `smidgen multisig finalize`
+```
+
+Bob now shares the `multisig.txt` file with Alice to continue with the process.
+
+When Alice receives the file, she has to use the `smidgen multisig add` command to add herself as the next party. Adding parties is possible until we finalize the wallet.
+
+```
+smidgen multisig add alice multisig.txt
+```
+
+```
+Enter your seed:
+info Successfully wrote to multisig.txt
+info Used key index 0 (main) and 1 (remainder)
+info Finish address creation with:
+info `smidgen multisig finalize`
+```
+
+As there are no remaining parties, Alice finalizes the Wallet:
+
+```
+smidgen multisig finalize multisig.txt
+```
+
+smidgen returns the current main address:
+
+
+```
+info Successfully wrote to multisig.txt
+info Main address: LDSWPKCQ9HNPIVHDRUBUWB9ZZPEDFZLYXJNZKIXBFQTWZFVJZJTTOJQWYOR9XVR9NZOQXNQGWQPCCSSWZQPLPDAOIZ
+```
+
+That's it. Alice can now share the finalized wallet file with Bob. Transfers from the generated address are just possible if both Alice and Bob sign the transfer.
+
+### Using a multisignature Wallet
+
+Let's take some IOTA from another wallet and transfer them to the new Multisignature wallet:
+
+```
+smidgen transfer 3 LDSWPKCQ9HNPIVHDRUBUWB9ZZPEDFZLYXJNZKIXBFQTWZFVJZJTTOJQWYOR9XVR9NZOQXNQGWQPCCSSWZQPLPDAOIZ
+```
+
+smidgen returns:
+
+```
+Enter your seed:
+info Successfully sent 3i to LDSWPKCQ9HNPIVHDRUBUWB9ZZPEDFZLYXJNZKIXBFQTWZFVJZJTTOJQWYOR9XVR9NZOQXNQGWQPCCSSWZQPLPDAOIZ
+info Transaction sent, hash: HMBROOZJBZYCFZTRVCDINXBLCAUX9ZREKIDWGLFAFYSFFBVBHDZTBBOCRKPNLEBZIURQXGJNXSU999999
+info Reattach with `smidgen reattach HMBROOZJBZYCFZTRVCDINXBLCAUX9ZREKIDWGLFAFYSFFBVBHDZTBBOCRKPNLEBZIURQXGJNXSU999999`
+```
+
+Awesome! In case our transaction is stuck, we can try to reattach with:
+
+```
+smidgen reattach HMBROOZJBZYCFZTRVCDINXBLCAUX9ZREKIDWGLFAFYSFFBVBHDZTBBOCRKPNLEBZIURQXGJNXSU999999
+```
+
+We can now monitor the balance of our Multisig wallet:
+
+```
+smidgen get-balance --watch LDSWPKCQ9HNPIVHDRUBUWB9ZZPEDFZLYXJNZKIXBFQTWZFVJZJTTOJQWYOR9XVR9NZOQXNQGWQPCCSSWZQPLPDAOIZ
+```
+
+Smidgen will print the current balance every 15 seconds:
+
+```
+Balance: 0 i (0 Mi) - 3s since last update
+```
+
+Time for a tea until the funds arrive at our Multisignature Wallet.
+
+
+The IOTA arrived!
+
+```
+Balance: 3 (0.000003 Mi) - 3s since last update
+```
+
+Let's continue and do our first transfer.
+
+To kick off a transfer both Bob and Alice have to sign with their Seeds. As Bob signed as the first party, he has to sign first this time as well.
+
+A transfer is created from the wallet file that is shared between the parties. Each transfer is appended to the file. This way we keep track of the key indexes and other details, like the current address.
+
+The signature of the command is:
+
+```
+smidgen multisig transfer <value> <address> <id> <file>
+```
+
+When we try to sign in a wrong order, smidgen will inform us:
+
+```
+smidgen multisig transfer 3 VSBHQVNJNWR... alice multisig.txt
+
+ERR! Wrong party signing. Current party: bob
+ERR! Signing order: bob, alice
+```
+
+So Bob has to sign first:
+
+```
+smidgen multisig transfer 3 VSBHQVNJNWR... bob multisig.txt
+```
+
+smidgen returns:
+
+```
+info Successfully signed transfer
+info Share multisig.txt with 'alice' to continue
+```
+
+Great! Now it is Alice's turn to sign the transfer after Bob sent her the updated wallet file:
+
+```
+smidgen multisig transfer 3 VSBHQVNJNWR... alice multisig.txt
+```
+
+Smidgen detects that the last party has signed, verifies the bundle and sends the transaction:
+
+```
+Enter your seed:
+info Verifying bundle... Bundle: OK
+info Sending transaction...
+info Transaction sent, hash: OHHJOCLRMKQ9EMINOZXITIKWFZIQBEWPOQWCIOMWOFNOILVDYLERFLJOFANUSECBXFEXOJ...
+info Reattach with `smidgen reattach OHHJOCLRMKQ9EMINOZXITIKWFZIQBEWPOQWCIOMWOFNOILVDYLERFLJOFANUSECBXF`
+info Saved status to multisig.txt
+info New main address: DIYWAXPNINNJXWDPGGXAQTYTPREQYDONTZXGZMQTAGDCUOAEJXJXOIUFAVDUORHERZCXCCUMQGRAP...
+```
+
+Great! That's it! smidgen created a new address for us.
+
+In case we want to accept new IOTA, we have to use the new address.
 
 ## API
 
@@ -195,14 +369,3 @@ smidgen.load(conf, (err, smidgen) => {
     - `depth` &lt;Number&gt; set depth for tip selection
     - `mwm` &lt;Number&gt; set minimum weight magnitude
     - `force` &lt;Boolean&gt; continue even with already used addresses
-
-#### smidgen['multisig'].create(iotaLib, conf, seed, id, filename, cb)
-
-  - `conf` &lt;Object&gt;
-    - `force` &lt;Boolean&gt; overwrite existing setup file
-
-If `filename` is `undefined` the `create` command will not write to a file.
-
-#### smidgen['multisig'].add(iotaLib, conf, seed, id, filename, cb)
-
-#### smidgen['multisig'].finalize(iotaLib, conf, filename, cb)
