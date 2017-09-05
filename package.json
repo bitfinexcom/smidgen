@@ -10,7 +10,7 @@
     "unit": "mocha"
   },
   "dependencies": {
-    "iota.lib.js": "0.4.0",
+    "iota.lib.js": "https://github.com/bitfinexcom/iota.lib.js#patched",
     "mkdirp": "^0.5.1",
     "nopt": "^4.0.1",
     "npmlog": "^4.1.2",
