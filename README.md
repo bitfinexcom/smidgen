@@ -33,7 +33,7 @@ change it by passing `--provider http://example.com` as argument.
 
 **Important:** Right now smidgen is not doing the POW itself and depends on a full node as a provider for transfers. You can specify a full node with `--provider`.
 
-#### generate-seed [--json]
+### generate-seed [--json]
 
 Returns a seed for the IOTA wallet. If `json` is true, it prints JSON.
 
@@ -47,7 +47,7 @@ $ smidgen generate-seed --json
 { seed: 'UZQRLQNQAAXNSJAZTTMWGCAMQCCZBKTQMC9GKRBMVGXWCBIZAOA9LEPBKZKFSPMUEAKGRISEDNOGPZNHG' }
 ```
 
-#### get-balance [address] [--json | --watch | --threshold |--provider]
+### get-balance [address] [--json | --watch | --threshold |--provider]
 
 Gets the balance of a wallet. If `json` is true, it prints JSON.
 The `--watch` option lets you watch a wallet for changes.
@@ -69,7 +69,7 @@ $ smidgen get-balance YHPMMBIMEGWGNKRIDNODAXABWBSRZGOQTAPOUAFODCOCOXZMVUZDRFYHMO
 Balance: 55 (0.000055 Mi)
 ```
 
-#### generate-address [--json | --depth | --mwm | --provider]
+### generate-address [--json | --depth | --mwm | --provider]
 
 Generates a new address and attaches to tangle.
 
@@ -78,7 +78,7 @@ Use `depth` to configure tip selection and `mwm` to change the minimum
 weight magnitude.
 
 
-#### transfer <amount> <address> [--json | --depth | --mwm | --force | --provider]
+### transfer &lt;amount> &lt;address&gt; [--json | --depth | --mwm | --force | --provider]
 
 Transfers a given amount of *i* to an address.
 With `--force` enabled smidgen will not check if the target address was used
@@ -86,30 +86,30 @@ before, which can lead to loss of IOTA for the owner of the address.
 
 **Important:** Right now smidgen is not doing the POW itself and depends on a full node as a provider for transfers. You can specify a full node with `--provider`.
 
-#### reattach <transaction> [--provider]
+### reattach &lt;transaction&gt; [--provider]
 
 Replays a specific transaction.
 
 **Important:** Right now smidgen is not doing the POW itself and depends on a full node as a provider for transfers. You can specify a full node with `--provider`.
 
-#### multisig create <id> <file> [--force]
+### multisig create &lt;id&gt; &lt;file&gt; [--force]
 
 Starts the creation of a multisignature wallet. `id` is the identifier for
 the first party that signs the wallet.
 
 `--force` can be used to overwrite an existing setup-file.
 
-#### multisig add <id> <file>
+### multisig add &lt;id&gt; &lt;file&gt;
 
 Adds another party to the setup file used for multisignature wallet generation.
 
-#### multisig finalize <file>
+### multisig finalize &lt;file&gt;
 
 Creates two addresses for transferring IOTA from the multisig wallet.
 One as the main address, and a second one which is used for remaining balance
 after the transfer.
 
-#### multisig transfer <value> <address> <id> <file> [--provider | --balance]
+### multisig transfer &lt;value&gt; &lt;address&gt; &lt;id&gt; &lt;file&gt; [--provider | --balance]
 
 Transfers a given amout to the target address. Takes the id of the signing
 party and the multisignature file, containing the account data.
@@ -294,7 +294,7 @@ smidgen exposes each command as callback-based API function.
 There is no printing and other CLI related parts in the functions and they
 can be used to compose other programs.
 
-#### smidgen['generate-seed'](iotaLib, conf, cb)
+### smidgen['generate-seed'](iotaLib, conf, cb)
 
   - `conf` &lt;Object&gt;
     - `json` &lt;Boolean&gt; return json
@@ -313,7 +313,7 @@ smidgen.load(conf, (err, smidgen) => {
 })
 ```
 
-#### smidgen['get-balance'].getBalanceForSeed(iotaLib, conf, seed, cb)
+### smidgen['get-balance'].getBalanceForSeed(iotaLib, conf, seed, cb)
 
   - `conf` &lt;Object&gt;
     - `json` &lt;Boolean&gt; return json
@@ -333,7 +333,7 @@ smidgen.load(conf, (err, smidgen) => {
 })
 ```
 
-#### smidgen['get-balance'].getBalanceForAddress(iotaLib, conf, address, cb)
+### smidgen['get-balance'].getBalanceForAddress(iotaLib, conf, address, cb)
 
   - `conf` &lt;Object&gt;
     - `json` &lt;Boolean&gt; return json
@@ -354,7 +354,7 @@ smidgen.load(conf, (err, smidgen) => {
 })
 ```
 
-#### smidgen['generate-address'](iotaLib, conf, cb)
+### smidgen['generate-address'](iotaLib, conf, cb)
 
   - `conf` &lt;Object&gt;
     - `json` &lt;Boolean&gt; return json
@@ -372,7 +372,7 @@ smidgen.load(conf, (err, smidgen) => {
 })
 ```
 
-#### smidgen['transfer'](iotaLib, conf, address, amount, seed, cb)
+### smidgen['transfer'](iotaLib, conf, address, amount, seed, cb)
 
   - `conf` &lt;Object&gt;
     - `json` &lt;Boolean&gt; return json
