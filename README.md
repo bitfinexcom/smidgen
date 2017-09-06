@@ -31,6 +31,8 @@ The CLI supports different commands for managing your wallet.
 The default provider is `http://iota.bitfinex.com:80`. You can
 change it by passing `--provider http://example.com` as argument.
 
+**Important:** Right now smidgen is not doing the POW itself and depends on a full node as a provider for transfers. You can specify a full node with `--provider`.
+
 #### generate-seed [--json]
 
 Returns a seed for the IOTA wallet. If `json` is true, it prints JSON.
@@ -82,9 +84,13 @@ Transfers a given amount of *i* to an address.
 With `--force` enabled smidgen will not check if the target address was used
 before, which can lead to loss of IOTA for the owner of the address.
 
+**Important:** Right now smidgen is not doing the POW itself and depends on a full node as a provider for transfers. You can specify a full node with `--provider`.
+
 #### reattach <transaction> [--provider]
 
 Replays a specific transaction.
+
+**Important:** Right now smidgen is not doing the POW itself and depends on a full node as a provider for transfers. You can specify a full node with `--provider`.
 
 #### multisig create <id> <file> [--force]
 
@@ -110,6 +116,8 @@ party and the multisignature file, containing the account data.
 
 With `--balance` we can override the current balance. This way smidgen will not query the tangle for the current balance.
 
+**Important:** Right now smidgen is not doing the POW itself and depends on a full node as a provider for transfers. You can specify a full node with `--provider`.
+
 ## Multisignature Wallets
 
 Multisignature wallets add an extra layer of security. With them, we can create addresses, that need multiple Seeds for a transaction. The seeds can be owned by one or multiple persons.
@@ -117,6 +125,8 @@ Multisignature wallets add an extra layer of security. With them, we can create 
 **Important:** Seeds to create multisignature wallets should just be used for one wallet.
 
 Smidgen uses a file that is shared between Seed-owners. With the file we manage the wallet with its addresses and transfers. This makes it easier to keep track of the current state. Private keys are not part of the file. Please make sure you read and understood the [Offical IOTA Multisig FAQ](https://github.com/iotaledger/wiki/blob/master/multisigs.md).
+
+**Important:** Right now smidgen is not doing the POW itself and depends on a full node as a provider for transfers. You can specify a full node with `--provider`.
 
 ### Creating a Multisignature Wallet
 
@@ -165,7 +175,7 @@ info `smidgen multisig finalize`
 As there are no remaining parties, Alice finalizes the Wallet:
 
 ```
-smidgen multisig finalize multisig.txt
+smidgen multisig finalize multisig.txt --provider=http://fullnode.example.com
 ```
 
 smidgen returns the current main address:
@@ -183,7 +193,7 @@ That's it. Alice can now share the finalized wallet file with Bob. Transfers fro
 Let's take some IOTA from another wallet and transfer them to the new Multisignature wallet:
 
 ```
-smidgen transfer 3 LDSWPKCQ9HNPIVHDRUBUWB9ZZPEDFZLYXJNZKIXBFQTWZFVJZJTTOJQWYOR9XVR9NZOQXNQGWQPCCSSWZQPLPDAOIZ
+smidgen transfer 3 --provider=http://fullnode.example.com LDSWPKCQ9HNPIVHDRUBUWB9ZZPEDFZLYXJNZKIXBFQTWZFVJZJTTOJQWYOR9XVR9NZOQXNQGWQPCCSSWZQPLPDAOIZ
 ```
 
 smidgen returns:
@@ -237,7 +247,7 @@ smidgen multisig transfer <value> <address> <id> <file>
 When we try to sign in a wrong order, smidgen will inform us:
 
 ```
-smidgen multisig transfer 3 VSBHQVNJNWR... alice multisig.txt
+smidgen multisig transfer 3 VSBHQVNJNWR... alice multisig.txt --provider=http://fullnode.example.com
 
 ERR! Wrong party signing. Current party: bob
 ERR! Signing order: bob, alice
@@ -246,7 +256,7 @@ ERR! Signing order: bob, alice
 So Bob has to sign first:
 
 ```
-smidgen multisig transfer 3 VSBHQVNJNWR... bob multisig.txt
+smidgen multisig transfer 3 VSBHQVNJNWR... bob multisig.txt --provider=http://fullnode.example.com
 ```
 
 smidgen returns:
@@ -259,7 +269,7 @@ info Share multisig.txt with 'alice' to continue
 Great! Now it is Alice's turn to sign the transfer after Bob sent her the updated wallet file:
 
 ```
-smidgen multisig transfer 3 VSBHQVNJNWR... alice multisig.txt
+smidgen multisig transfer 3 VSBHQVNJNWR... alice multisig.txt --provider=http://fullnode.example.com
 ```
 
 Smidgen detects that the last party has signed, verifies the bundle and sends the transaction:
