@@ -78,7 +78,7 @@ Use `depth` to configure tip selection and `mwm` to change the minimum
 weight magnitude.
 
 
-### transfer &lt;amount> &lt;address&gt; [--json | --depth | --mwm | --force | --provider]
+### transfer &lt;amount&gt; &lt;address&gt; [--json | --depth | --mwm | --force | --provider]
 
 Transfers a given amount of *i* to an address.
 With `--force` enabled smidgen will not check if the target address was used
