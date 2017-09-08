@@ -28,7 +28,7 @@ smidgen.load(parsed, (err) => {
   if (err) return handleError(err)
 
   if (!cmd || !smidgen.cli[cmd]) {
-    return smidgen.cli.help(() => {})
+    return smidgen.cli.help([], () => {})
   }
 
   smidgen
