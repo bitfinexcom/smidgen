@@ -47,7 +47,7 @@ $ smidgen generate-seed --json
 { seed: 'UZQRLQNQAAXNSJAZTTMWGCAMQCCZBKTQMC9GKRBMVGXWCBIZAOA9LEPBKZKFSPMUEAKGRISEDNOGPZNHG' }
 ```
 
-### get-balance [address] [--json | --watch | --threshold |--provider]
+### get-balance [address] [--json | --watch | --threshold | --provider]
 
 Gets the balance of a wallet. If `json` is true, it prints JSON.
 The `--watch` option lets you watch a wallet for changes.
