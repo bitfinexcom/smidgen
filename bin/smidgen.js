@@ -18,7 +18,8 @@ const parsed = nopt({
   'provider': [ String ],
   'threshold': [ Number ],
   'security': [ Number ],
-  'balance': [ Number ]
+  'balance': [ Number ],
+  'token': [ String ]
 
 }, {}, process.argv, 2)
 
@@ -28,7 +29,7 @@ smidgen.load(parsed, (err) => {
   if (err) return handleError(err)
 
   if (!cmd || !smidgen.cli[cmd]) {
-    return smidgen.cli.help(() => {})
+    return smidgen.cli.help([], () => {})
   }
 
   smidgen
