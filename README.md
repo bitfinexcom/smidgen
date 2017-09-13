@@ -152,8 +152,11 @@ Smidgen asks for the Seed Bob wants to use and creates the file with the digest.
 Enter your seed:
 info Successfully wrote to multisig.txt
 info Used key index 0 (main) and 1 (remainder)
-info Finish address creation with:
-info `smidgen multisig add` and `smidgen multisig finalize`
+info
+info Add another party with:
+info smidgen multisig add <name> multisig.txt
+info You can finalize the wallet with:
+info smidgen multisig finalize multisig.txt
 ```
 
 Bob now shares the `multisig.txt` file with Alice to continue with the process.
@@ -172,10 +175,10 @@ info Finish address creation with:
 info `smidgen multisig finalize`
 ```
 
-As there are no remaining parties, Alice finalizes the Wallet:
+As there are no remaining parties, Alice finalizes the wallet:
 
 ```
-smidgen multisig finalize multisig.txt --provider=http://fullnode.example.com
+smidgen multisig finalize multisig.txt
 ```
 
 smidgen returns the current main address:
@@ -211,19 +214,19 @@ Awesome! In case our transaction is stuck, we can try to reattach with:
 smidgen reattach HMBROOZJBZYCFZTRVCDINXBLCAUX9ZREKIDWGLFAFYSFFBVBHDZTBBOCRKPNLEBZIURQXGJNXSU999999
 ```
 
-We can now monitor the balance of our Multisig wallet:
+We can now monitor the balance of our multisignature wallet:
 
 ```
 smidgen get-balance --watch LDSWPKCQ9HNPIVHDRUBUWB9ZZPEDFZLYXJNZKIXBFQTWZFVJZJTTOJQWYOR9XVR9NZOQXNQGWQPCCSSWZQPLPDAOIZ
 ```
 
-Smidgen will print the current balance every 15 seconds:
+smidgen will print the current balance every 15 seconds:
 
 ```
 Balance: 0 i (0 Mi) - 3s since last update
 ```
 
-Time for a tea until the funds arrive at our Multisignature Wallet.
+Time for a tea until the funds arrive at our multisignature wallet...
 
 
 The IOTA arrived!
@@ -234,7 +237,7 @@ Balance: 3 (0.000003 Mi) - 3s since last update
 
 Let's continue and do our first transfer.
 
-To kick off a transfer both Bob and Alice have to sign with their Seeds. As Bob signed as the first party, he has to sign first this time as well.
+To kick off a transfer. Both Bob and Alice have to sign with their Seeds. As Bob signed as the first party, he also has to sign first this time.
 
 A transfer is created from the wallet file that is shared between the parties. Each transfer is appended to the file. This way we keep track of the key indexes and other details, like the current address.
 
@@ -244,7 +247,7 @@ The signature of the command is:
 smidgen multisig transfer <value> <address> <id> <file>
 ```
 
-When we try to sign in a wrong order, smidgen will inform us:
+When we try to sign in a wrong order, smidgen will notify us:
 
 ```
 smidgen multisig transfer 3 VSBHQVNJNWR... alice multisig.txt --provider=http://fullnode.example.com
@@ -266,13 +269,13 @@ info Successfully signed transfer
 info Share multisig.txt with 'alice' to continue
 ```
 
-Great! Now it is Alice's turn to sign the transfer after Bob sent her the updated wallet file:
+Great! Now it is Alice's turn to sign the transfer after Bob sent her the updated wallet file. smidgen will detect that the last party has signed and send the transaction. For the transfer we have to do a POW, so we need to specify a full node as provider:
 
 ```
 smidgen multisig transfer 3 VSBHQVNJNWR... alice multisig.txt --provider=http://fullnode.example.com
 ```
 
-Smidgen detects that the last party has signed, verifies the bundle and sends the transaction:
+smidgen verifies the bundle and sends the transfer:
 
 ```
 Enter your seed:
@@ -286,7 +289,7 @@ info New main address: DIYWAXPNINNJXWDPGGXAQTYTPREQYDONTZXGZMQTAGDCUOAEJXJXOIUFA
 
 Great! That's it! smidgen created a new address for us.
 
-In case we want to accept new IOTA, we have to use the new address.
+In case we want to accept new IOTA, we have to use the new address that was just generated.
 
 ## API
 
