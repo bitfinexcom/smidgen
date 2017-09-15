@@ -1,5 +1,7 @@
 # smidgen - Tiny IOTA multisignature wallet
 
+Status: *smidgen is in late BETA right now*
+
   - [Installation](#installation)
   - [Multisignature Wallets](#multisignature-wallets)
   - [Commands](#commands)
