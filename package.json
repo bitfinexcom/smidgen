@@ -28,7 +28,8 @@
   },
   "keywords": [
     "iota",
-    "cli"
+    "cli",
+    "wallet"
   ],
   "author": "Robert Kowalski <rok@kowalski.gd>",
   "license": "MIT",
