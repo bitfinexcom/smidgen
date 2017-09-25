@@ -11,6 +11,7 @@
   },
   "preferGlobal": true,
   "dependencies": {
+    "async": "^2.5.0",
     "iota.lib.js": "https://github.com/bitfinexcom/iota.lib.js#041-patched",
     "mkdirp": "0.5.1",
     "nopt": "4.0.1",

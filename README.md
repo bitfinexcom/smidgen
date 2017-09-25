@@ -10,6 +10,7 @@ Status: *smidgen is in late BETA right now*
     - generate-address
     - transfer
     - reattach
+    - regenerate-addresses
     - multisig create
     - multisig add
     - multisig finalize
@@ -93,6 +94,10 @@ before, which can lead to loss of IOTA for the owner of the address.
 Replays a specific transaction.
 
 **Important:** Right now smidgen is not doing the POW itself and depends on a full node as a provider for transfers. You can specify a full node with `--provider`.
+
+### regenerate-addresses [--amount | --json | --depth | --mwm | --force | --provider]
+
+Regenerates addresses to recover balances after a fresh snapshot. Default amount for addresses to generate is 25.
 
 ### multisig create &lt;id&gt; &lt;file&gt; [--force]
 
