@@ -18,7 +18,8 @@ const parsed = nopt({
   'provider': [ String ],
   'threshold': [ Number ],
   'security': [ Number ],
-  'balance': [ Number ]
+  'balance': [ Number ],
+  'token': [ String ]
 
 }, {}, process.argv, 2)
 
