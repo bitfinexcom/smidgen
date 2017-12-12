@@ -99,16 +99,20 @@ Replays a specific transaction.
 
 Regenerates addresses to recover balances after a fresh snapshot. Default amount for addresses to generate is 25.
 
-### multisig create &lt;id&gt; &lt;file&gt; [--force]
+### multisig create &lt;id&gt; &lt;file&gt; [--no-validation | --force]
 
 Starts the creation of a multisignature wallet. `id` is the identifier for
 the first party that signs the wallet.
 
 `--force` can be used to overwrite an existing setup-file.
 
-### multisig add &lt;id&gt; &lt;file&gt;
+With `--no-validation` smidgen does not check if the provided seed may have been already used via getKeyIndex. This comes handy if you have no internet connection.
+
+### multisig add &lt;id&gt; &lt;file&gt; [--no-validation]
 
 Adds another party to the setup file used for multisignature wallet generation.
+
+With `--no-validation` smidgen does not check if the provided seed may have been already used via getKeyIndex. This comes handy if you have no internet connection.
 
 ### multisig finalize &lt;file&gt;
 
@@ -134,6 +138,8 @@ Multisignature wallets add an extra layer of security. With them, we can create 
 Smidgen uses a file that is shared between Seed-owners. With the file we manage the wallet with its addresses and transfers. This makes it easier to keep track of the current state. Private keys are not part of the file. Please make sure you read and understood the [Offical IOTA Multisig FAQ](https://github.com/iotaledger/wiki/blob/master/multisigs.md).
 
 **Important:** Right now smidgen is not doing the POW itself and depends on a full node as a provider for transfers. You can specify a full node with `--provider`.
+
+smidgen tries to make multisignature wallet creation safe. As part of it tries to find out if a seed was previously used with a single-signature wallet. This is done via `getKeyIndex`so it checks if the seed was used with another transaction before. However, when a node is offline, you have no WiFi or you don't want the additional safety net you can disable the checks with `--no-validation`.
 
 ### Creating a Multisignature Wallet
 
