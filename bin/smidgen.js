@@ -19,7 +19,8 @@ const parsed = nopt({
   'threshold': [ Number ],
   'security': [ Number ],
   'balance': [ Number ],
-  'amount': [ Number ]
+  'amount': [ Number ],
+  'validation': [ Boolean ]
 
 }, {}, process.argv, 2)
 
