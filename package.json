@@ -12,7 +12,7 @@
   "preferGlobal": true,
   "dependencies": {
     "async": "2.6.0",
-    "iota.lib.js": "0.4.3",
+    "iota.lib.js": "0.4.5",
     "mkdirp": "0.5.1",
     "nopt": "4.0.1",
     "npmlog": "4.1.2",
