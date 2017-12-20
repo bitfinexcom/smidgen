@@ -81,9 +81,9 @@ Use `depth` to configure tip selection and `mwm` to change the minimum
 weight magnitude.
 
 
-### transfer &lt;amount&gt; &lt;address&gt; [--json | --depth | --mwm | --force | --provider]
+### transfer &lt;amount&gt; &lt;address&gt; [&lt;amount&gt; &lt;address&gt;...] [--json | --depth | --mwm | --force | --provider]
 
-Transfers a given amount of *i* to an address.
+Transfers a given amount of *i* to an address. You can define multiple output adresses.
 With `--force` enabled smidgen will not check if the target address was used
 before, which can lead to loss of IOTA for the owner of the address.
 
@@ -120,9 +120,9 @@ Creates two addresses for transferring IOTA from the multisig wallet.
 One as the main address, and a second one which is used for remaining balance
 after the transfer.
 
-### multisig transfer &lt;value&gt; &lt;address&gt; &lt;id&gt; &lt;file&gt; [--provider | --balance]
+### multisig transfer &lt;amount&gt; &lt;address&gt; [&lt;amount&gt; &lt;address&gt;...] &lt;id&gt; &lt;file&gt; [--provider | --balance]
 
-Transfers a given amout to the target address. Takes the id of the signing
+Transfers a given amout to one or more target addresses. Takes the id of the signing
 party and the multisignature file, containing the account data.
 
 With `--balance` we can override the current balance. This way smidgen will not query the tangle for the current balance.
@@ -387,11 +387,3 @@ smidgen.load(conf, (err, smidgen) => {
   })
 })
 ```
-
-### smidgen['transfer'](iotaLib, conf, address, amount, seed, cb)
-
-  - `conf` &lt;Object&gt;
-    - `json` &lt;Boolean&gt; return json
-    - `depth` &lt;Number&gt; set depth for tip selection
-    - `mwm` &lt;Number&gt; set minimum weight magnitude
-    - `force` &lt;Boolean&gt; continue even with already used addresses
