@@ -36,8 +36,8 @@ describe('unit: transfer', () => {
     assert.deepEqual(
       res,
       [
-        { address: 'foo', value: 1, tag: '', message: '' },
-        { address: 'apple', value: 5, tag: '', message: '' }
+        { address: 'foo', value: 1, tag: '999999999999999999999999999', message: '' },
+        { address: 'apple', value: 5, tag: '999999999999999999999999999', message: '' }
       ]
     )
   })
@@ -52,8 +52,8 @@ describe('unit: transfer', () => {
     assert.deepEqual(
       res,
       [
-        { address: '999999999999999999999999999999999999999999999999999999999999999999999999999999999A9BEONKZW', value: 1, tag: '', message: '' },
-        { address: '999999999999999999999999999999999999999999999999999999999999999999999999999999999A9BEONKZW', value: 5, tag: '', message: '' }
+        { address: '999999999999999999999999999999999999999999999999999999999999999999999999999999999A9BEONKZW', value: 1, tag: '999999999999999999999999999', message: '' },
+        { address: '999999999999999999999999999999999999999999999999999999999999999999999999999999999A9BEONKZW', value: 5, tag: '999999999999999999999999999', message: '' }
       ]
 
     )
