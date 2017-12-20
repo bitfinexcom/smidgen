@@ -3,6 +3,9 @@
 'use strict'
 
 const nopt = require('nopt')
+const osenv = require('osenv')
+const path = require('path')
+const fs = require('fs')
 
 const smidgen = require('../lib/smidgen.js')
 const handleError = require('../lib/handle-error.js')
@@ -23,6 +26,13 @@ const parsed = nopt({
   'validation': [ Boolean ]
 
 }, {}, process.argv, 2)
+
+const home = osenv.home()
+parsed.smidgenconf = path.join(home, '.smidgenrc')
+
+if (!fs.existsSync(parsed.smidgenconf)) {
+  fs.writeFileSync(parsed.smidgenconf, '{"provider": "http://iota.bitfinex.com:80"}')
+}
 
 const cmd = parsed.argv.remain.shift()
 

@@ -3,6 +3,7 @@
 Status: *smidgen is in late BETA right now*
 
   - [Installation](#installation)
+  - [Config](#config)
   - [Multisignature Wallets](#multisignature-wallets)
   - [Commands](#commands)
     - generate-seed
@@ -26,6 +27,10 @@ Status: *smidgen is in late BETA right now*
 ```
 npm install -g smidgen
 ```
+
+## Config
+
+smidgen will put a config file named `.smidgenrc` into your home. This way you can set arguments like `provider` on a permanent basis. Use commandline arguments to overwrite them temporaily.
 
 ## Commands
 
