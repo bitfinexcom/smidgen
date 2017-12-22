@@ -16,6 +16,7 @@
     "mkdirp": "0.5.1",
     "nopt": "4.0.1",
     "npmlog": "4.1.2",
+    "osenv": "0.1.4",
     "read": "1.0.7",
     "single-line-log": "1.1.2"
   },
