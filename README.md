@@ -16,6 +16,7 @@ Status: *smidgen is in late BETA right now*
     - multisig add
     - multisig finalize
     - multisig transfer
+    - multisig reattach
   - [API](#api)
     - 'generate-seed'
     - 'get-balance'
@@ -133,6 +134,10 @@ party and the multisignature file, containing the account data.
 With `--balance` we can override the current balance. This way smidgen will not query the tangle for the current balance.
 
 **Important:** Right now smidgen is not doing the POW itself and depends on a full node as a provider for transfers. You can specify a full node with `--provider`.
+
+### multisig reattach &lt;file&gt;
+
+Reads a wallet file and takes the current main address and sends 0i to it, from a random seed generated on the fly, to resurrect the wallet after a snapshot.
 
 ## Multisignature Wallets
 
