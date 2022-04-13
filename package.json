@@ -11,7 +11,7 @@
   },
   "preferGlobal": true,
   "dependencies": {
-    "async": "2.6.0",
+    "async": "3.2.2",
     "iota.lib.js": "0.4.7",
     "mkdirp": "0.5.1",
     "nopt": "4.0.1",
